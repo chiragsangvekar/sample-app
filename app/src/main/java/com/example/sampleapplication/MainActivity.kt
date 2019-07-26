@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sampleapplication.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initUI()
     }
 
@@ -23,8 +26,9 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         viewModel.dataListResultUIModel.observe(this, Observer { listData ->
 
+            binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+            binding.listRv.adapter = DataListAdapter()
             var adapter = binding.listRv.adapter as DataListAdapter
-            list_rv.adapter = adapter
             listData.let {
                 adapter.updateData(listData)
             }
