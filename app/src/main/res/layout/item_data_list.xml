@@ -6,11 +6,10 @@
                                                        android:layout_width="match_parent"
                                                        android:layout_height="100dp">
 
-        <TextView android:layout_width="300dp"
+        <TextView android:layout_width="100dp"
                   android:id="@+id/text_data"
                   android:layout_height="match_parent"
                   android:text="my data"
-                  android:textSize="40dp"
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toTopOf="parent"
                   android:gravity="center"/>

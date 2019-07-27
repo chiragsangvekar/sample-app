@@ -1,5 +1,6 @@
 package com.example.sampleapplication
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -7,11 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.sampleapplication.databinding.ItemDataListBinding
+import android.graphics.Bitmap
+import android.content.Context.MODE_PRIVATE
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
+import android.util.Log
+import java.io.FileOutputStream
+import java.net.URL
 
-class DataListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class DataListAdapter(context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     var dataListUI: List<ListDataUIModel>? = null
+    var applicationContext = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemDataListBinding>(
@@ -56,9 +66,11 @@ class DataListViewHolder(
     fun bindTo(dataUIPos: ListDataUIModel?) {
         dataUIPos?.text.let {
             binding.textData.text = it
-            Glide.with(binding.textData.context).load("https://images.unsplash.com/photo-1523676060187-f55189a71f5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80").centerCrop().diskCacheStrategy(
+            Glide.with(binding.textData.context).load(dataUIPos?.url).centerCrop().diskCacheStrategy(
                 DiskCacheStrategy.ALL).into(binding.dataIv)
 
         }
     }
 }
+
+

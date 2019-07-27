@@ -8,8 +8,8 @@ data class ListDataUIModel (
 )
 
 data class DataNwModel (
-    @SerializedName("first_name") val text: String?,
-    @SerializedName("last_name") val url: String?
+    @SerializedName("place") val text: String?,
+    @SerializedName("url") val url: String?
 )
 
 data class ListDataNwModel(
