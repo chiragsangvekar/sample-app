@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     dataBinding {
@@ -26,6 +28,7 @@ android {
 }
 ext {
     stetho = '1.5.0'
+    room = '2.0.0'
 }
 
 dependencies {
@@ -33,6 +36,8 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    implementation "androidx.room:room-runtime:$room"
+    kapt "androidx.room:room-compiler:$room"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation "com.facebook.stetho:stetho:$stetho"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
