@@ -6,19 +6,14 @@
                                                        android:layout_width="match_parent"
                                                        android:layout_height="100dp">
 
-        <TextView android:layout_width="100dp"
-                  android:id="@+id/text_data"
-                  android:layout_height="match_parent"
-                  android:text="my data"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent"
-                  android:gravity="center"/>
         <ImageView
                 android:id="@+id/data_iv"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                app:layout_constraintStart_toEndOf="@+id/text_data"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="150dp"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

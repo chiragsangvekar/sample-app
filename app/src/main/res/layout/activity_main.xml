@@ -10,15 +10,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MainActivity">
+/>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+        <Button
+                android:text="Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/editText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_horizontal"
+                android:id="@+id/button"
+                android:layout_marginLeft="160dp"
+                android:layout_marginStart="160dp"
+                android:onClick="onSearch"
+        />
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                tools:layout_editor_absoluteY="233dp"
+                tools:layout_editor_absoluteX="230dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/editText"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

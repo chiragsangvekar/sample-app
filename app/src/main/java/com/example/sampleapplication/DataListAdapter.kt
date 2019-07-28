@@ -1,27 +1,38 @@
 package com.example.sampleapplication
 
-import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.sampleapplication.databinding.ItemDataListBinding
-import android.graphics.Bitmap
-import android.content.Context.MODE_PRIVATE
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
-import android.util.Log
-import java.io.FileOutputStream
-import java.net.URL
+import com.example.sampleapplication.DataListAdapter.ItemClickListener
 
 
-class DataListAdapter(context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+
+class DataListAdapter(clickListener: ItemClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+//    var onItemClickListener = clickListener
+    interface ItemClickListener {
+        fun onItemClick( position: Int)
+    }
+
+    private var onItemClickListener: ItemClickListener? = clickListener
+
+//    fun setItemClickListener(clickListener: ItemClickListener) {
+//        onItemClickListener = clickListener
+//    }
+
+//    private ItemClickListener onItemClickListener;
 
 
     var dataListUI: List<ListDataUIModel>? = null
-    var applicationContext = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemDataListBinding>(
@@ -53,6 +64,9 @@ class DataListAdapter(context: Context): RecyclerView.Adapter<RecyclerView.ViewH
         when(holder) {
             is DataListViewHolder -> {
                 holder.bindTo(dataPos)
+                holder.binding.dataIv.setOnClickListener{
+                    onItemClickListener?.onItemClick(position = position)
+                }
             }
         }
     }
@@ -61,16 +75,19 @@ class DataListAdapter(context: Context): RecyclerView.Adapter<RecyclerView.ViewH
 
 class DataListViewHolder(
     val binding: ItemDataListBinding
-) : RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root) , View.OnClickListener{
 
     fun bindTo(dataUIPos: ListDataUIModel?) {
-        dataUIPos?.text.let {
-            binding.textData.text = it
-            Glide.with(binding.textData.context).load(dataUIPos?.url).centerCrop().diskCacheStrategy(
+        Log.d("RecyclerView","Inside bindto")
+        dataUIPos?.url.let {
+//            binding.textData.text = it
+            Glide.with(binding.dataIv.context).load(it).centerCrop().diskCacheStrategy(
                 DiskCacheStrategy.ALL).into(binding.dataIv)
 
         }
     }
+
+    override fun onClick(view: View?)  {
+         adapterPosition
+    }
 }
-
-
