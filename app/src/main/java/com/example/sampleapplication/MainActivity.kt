@@ -61,15 +61,31 @@ class MainActivity : AppCompatActivity() , MainActivtyRecyclerAdapter.ItemClickL
 //        }
 
 
-        initUI()
+//        initUI()
 
         viewModel.downloadedImagesList.observe(this , Observer {
             imageList = it
-            adapter.updateData(imageList)
+//            adapter.updateData(imageList)
+//            loadFragment(it)
         })
         viewModel.downloadImage("https://www.gstatic.com/webp/gallery3/1.png")
         viewModel.downloadImage("https://www.gstatic.com/webp/gallery/1.jpg")
     }
+
+     fun loadFragment(imagelist : List<ImageListEntry>) {
+         Log.d("ImageLoadingLibrary", "loading fragment" )
+         val fragmentDemo = supportFragmentManager.findFragmentById(R.id.frameContainer)
+         //above part is to determine which fragment is in your frame_container
+//        setFragment(fragmentDemo)
+         var mainActivityFragment = MainActivityRecyclerViewFragment(imageList,this)
+         val fragmentManager = supportFragmentManager
+         val fragmentTransaction = fragmentManager.beginTransaction()
+         fragmentTransaction.replace(R.id.frameContainer, mainActivityFragment)
+         fragmentTransaction.commit()
+         binding.frameContainer.visibility = View.VISIBLE
+         binding.button.visibility = View.GONE
+
+     }
 
     fun searchQuery(search : String) {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
@@ -86,16 +102,17 @@ class MainActivity : AppCompatActivity() , MainActivtyRecyclerAdapter.ItemClickL
     }
 
     fun onSearch(view: View ){
-        searchInput = search_input.text.toString()
-        searchQuery(searchInput.toString())
+//        searchInput = search_input.text.toString()
+//        searchQuery(searchInput.toString())
+        loadFragment(imageList)
     }
 
 
     fun initUI() {
-        Log.d("ImageLoadingLibrary", "Initializing recyclerView")
-        binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
-        binding.listRv.adapter = MainActivtyRecyclerAdapter(this)
-        adapter = binding.listRv.adapter as MainActivtyRecyclerAdapter
+//        Log.d("ImageLoadingLibrary", "Initializing recyclerView")
+//        binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+//        binding.listRv.adapter = MainActivtyRecyclerAdapter(this)
+//        adapter = binding.listRv.adapter as MainActivtyRecyclerAdapter
 //        adapter.updateData(listDateUIModel)
     }
 
