@@ -25,13 +25,6 @@ class DataListAdapter(clickListener: ItemClickListener): RecyclerView.Adapter<Re
 
     private var onItemClickListener: ItemClickListener? = clickListener
 
-//    fun setItemClickListener(clickListener: ItemClickListener) {
-//        onItemClickListener = clickListener
-//    }
-
-//    private ItemClickListener onItemClickListener;
-
-
     var dataListUI: List<ListDataUIModel>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -49,6 +42,8 @@ class DataListAdapter(clickListener: ItemClickListener): RecyclerView.Adapter<Re
         dataListUI = listDatumUIS
         notifyDataSetChanged()
     }
+
+
 
     override fun getItemCount(): Int {
         if(dataListUI == null) {

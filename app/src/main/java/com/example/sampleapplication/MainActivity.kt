@@ -24,16 +24,28 @@ import com.example.sampleapplication.db.MyData
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.coroutines.experimental.launch
+//import kotlinx.coroutines.experimental.launch
 //import kotlinx.coroutines.experimental.launch
 import java.io.FileOutputStream
 import java.net.URL
+import android.R.id.edit
+import android.text.method.TextKeyListener.clear
+import android.content.SharedPreferences
 
-class MainActivity : AppCompatActivity() {
+
+
+class MainActivity : AppCompatActivity() , MainActivtyRecyclerAdapter.ItemClickListener{
+    override fun onItemClick(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private lateinit var viewModel: MainActivityViewModel
     var searchInput : String? = null
     lateinit var search_input : EditText
+    private lateinit var binding: com.example.sampleapplication.databinding.ActivityMainBinding
+    lateinit var adapter : MainActivtyRecyclerAdapter
+    lateinit var imageList : List<ImageListEntry>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +53,22 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         search_input=findViewById(R.id.editText)
         val dataDao = AppDatabase.get(applicationContext).myDataDao()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
 //        launch {
 //            dataDao.insertAll(transformToDBDAta(listData))
 //            Log.d("MainActivityTest","Entry: " + dataDao.findData(1))
 //        }
+
+
+        initUI()
+
+        viewModel.downloadedImagesList.observe(this , Observer {
+            imageList = it
+            adapter.updateData(imageList)
+        })
+        viewModel.downloadImage("https://www.gstatic.com/webp/gallery3/1.png")
+        viewModel.downloadImage("https://www.gstatic.com/webp/gallery/1.jpg")
     }
 
     fun searchQuery(search : String) {
@@ -65,6 +88,15 @@ class MainActivity : AppCompatActivity() {
     fun onSearch(view: View ){
         searchInput = search_input.text.toString()
         searchQuery(searchInput.toString())
+    }
+
+
+    fun initUI() {
+        Log.d("ImageLoadingLibrary", "Initializing recyclerView")
+        binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        binding.listRv.adapter = MainActivtyRecyclerAdapter(this)
+        adapter = binding.listRv.adapter as MainActivtyRecyclerAdapter
+//        adapter.updateData(listDateUIModel)
     }
 
 //    fun transformToDBDAta(data: List<ListDataUIModel>): List<MyData> {
