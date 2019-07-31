@@ -1,5 +1,6 @@
 package com.example.sampleapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,12 @@ import com.example.sampleapplication.databinding.ActivityMainBinding
 import com.example.sampleapplication.db.AppDatabase
 import com.example.sampleapplication.db.MyData
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.launch
+import android.content.Context.ACTIVITY_SERVICE
+import android.app.ActivityManager
+import android.content.Context
+
+
+//import kotlinx.coroutines.experimental.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,25 +32,64 @@ class MainActivity : AppCompatActivity() {
         initUI()
     }
 
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
+
     fun initUI() {
-        val dataDao = AppDatabase.get(applicationContext).myDataDao()
+//        val dataDao = AppDatabase.get(applicationContext).myDataDao()
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        viewModel.dataListResultUIModel.observe(this, Observer { listData ->
+        var input  = ServiceIntent("Hello","From Main Activity")
+        var isServiceRunning = isMyServiceRunning(MyService::class.java)
 
-            binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
-            binding.listRv.adapter = DataListAdapter()
-            var adapter = binding.listRv.adapter as DataListAdapter
-            listData.let {
-                adapter.updateData(listData)
+        if(!isServiceRunning){
+            Log.d("MYSERVICE","Starting Service " )
+            var serviceIntent = Intent(this,MyService::class.java).apply {
+                var bundle = Bundle()
+                bundle.putParcelable("ServiceIntent",input)
+                putExtra("IntentBundle",bundle)
             }
+            startService(serviceIntent)
+        }
+        else{
+            Log.d("MyService","Service already running" )
+        }
 
-            launch {
-                dataDao.insertAll(transformToDBDAta(listData))
-                Log.d("MainActivityTest","Entry: " + dataDao.findData(1))
+        if(!isMyServiceRunning(MyService::class.java)){
+            Log.d("MYSERVICE","Starting Service " )
+            var serviceIntent = Intent(this,MyService::class.java).apply {
+                var bundle = Bundle()
+                bundle.putParcelable("ServiceIntent",input)
+                putExtra("IntentBundle",bundle)
             }
-        })
+            startService(serviceIntent)
+        }
+        else{
+            Log.d("MyService","Service already running" )
+        }
 
-        viewModel.getData()
+//        viewModel.dataListResultUIModel.observe(this, Observer { listData ->
+//
+//            binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+//            binding.listRv.adapter = DataListAdapter()
+//            var adapter = binding.listRv.adapter as DataListAdapter
+//            listData.let {
+//                adapter.updateData(listData)
+//            }
+//
+//            launch {
+//                dataDao.insertAll(transformToDBDAta(listData))
+//                Log.d("MainActivityTest","Entry: " + dataDao.findData(1))
+//            }
+//        })
+//
+//        viewModel.getData()
 
     }
 
