@@ -38,24 +38,25 @@ class MainActivity : AppCompatActivity() {
                 adapter.updateData(listData)
             }
 
-            launch {
-                dataDao.insertAll(transformToDBDAta(listData))
-                Log.d("MainActivityTest","Entry: " + dataDao.findData(1))
-            }
         })
 
-        viewModel.getData()
+        var mainActivityInputFragment = MainActivityInputFragment()
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.inputFragment, mainActivityInputFragment)
+        fragmentTransaction.commit()
+
+        var mainActivityOutputFragment = MainActivityOutputFragment()
+        val fragmentManager_2 = supportFragmentManager
+        val fragmentTransaction_2 = fragmentManager_2.beginTransaction()
+        fragmentTransaction_2.replace(R.id.outputFragment, mainActivityOutputFragment)
+        fragmentTransaction_2.commit()
+
+
+//        viewModel.getData()
+
+        //add fragment 1
 
     }
 
-    fun transformToDBDAta(data: List<ListDataUIModel>): List<MyData> {
-        var myData = ArrayList<MyData>()
-        data.forEach {
-            myData.add(MyData(
-                uId = 0,
-                text = it.text,
-                data = it.url))
-        }
-        return myData
-    }
 }
