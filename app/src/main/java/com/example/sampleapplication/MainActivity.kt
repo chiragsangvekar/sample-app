@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.sampleapplication.databinding.ActivityMainBinding
+//import com.example.sampleapplication.databinding.ActivityMainBinding
 import com.example.sampleapplication.db.AppDatabase
 import com.example.sampleapplication.db.MyData
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,17 +23,27 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
-    private lateinit var binding: ActivityMainBinding
+//    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+//        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(R.layout.activity_main)
         initUI()
     }
 
     fun initUI() {
         val dataDao = AppDatabase.get(applicationContext).myDataDao()
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+
+        // 1
+        happyButton.setOnClickListener({
+            emotionalFaceView.happinessState = EmotionalFaceView.HAPPY
+        })
+// 2
+        sadButton.setOnClickListener({
+            emotionalFaceView.happinessState = EmotionalFaceView.SAD
+        })
 //        viewModel.dataListResultUIModel.observe(this, Observer { listData ->
 //
 //            binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
