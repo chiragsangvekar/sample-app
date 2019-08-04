@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_constrained)
         initUI()
     }
 
@@ -37,13 +37,13 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
         // 1
-        happyButton.setOnClickListener({
-            emotionalFaceView.happinessState = EmotionalFaceView.HAPPY
-        })
-// 2
-        sadButton.setOnClickListener({
-            emotionalFaceView.happinessState = EmotionalFaceView.SAD
-        })
+//        happyButton.setOnClickListener({
+//            emotionalFaceView.happinessState = EmotionalFaceView.HAPPY
+//        })
+//// 2
+//        sadButton.setOnClickListener({
+//            emotionalFaceView.happinessState = EmotionalFaceView.SAD
+//        })
 //        viewModel.dataListResultUIModel.observe(this, Observer { listData ->
 //
 //            binding.listRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
