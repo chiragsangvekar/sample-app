@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sample Application</string>
+    <string name="search_hint">Type to search</string>
+    <string name="result_heading">Search Results</string>
+    <string name="more_details">More details below</string>
+    <string name="loading">Loading ...</string>
+</resources>

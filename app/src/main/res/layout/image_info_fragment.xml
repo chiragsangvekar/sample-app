@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView android:id="@+id/header_text"
+                  android:layout_width="match_parent"
+                  android:background="#D3D3D3"
+                  android:text="Search Information"
+                  android:textColor="#000000"
+                  android:gravity="center"
+                  android:textSize="30dp"
+                  android:padding="10dp"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:id="@+id/data_tv"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="20dp"
+                  android:textSize="20dp"
+                  android:gravity="center"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintTop_toBottomOf="@id/header_text"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
